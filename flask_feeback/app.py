@@ -1,5 +1,6 @@
+#activate the virtual environment
 from flask import Flask,request,redirect,url_for,render_template #flask - package, Flask -module/class
-from flask_mysqldb import MySQL #pip install flask_mysqldb
+from flask_mysqldb import MySQL #pip install flask_mysqldb ->flsk and mysqldb are classes imported from a package
 app =Flask(__name__)    #app is the object , __name__ variable/argument
 
 #configuration of databse
@@ -7,15 +8,23 @@ app.config['MYSQL_HOST']='localhost'
 # app.config['MYSQLPORT']=3307 #for diffeent port
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']='root'
-app.config['MYSQL_DB']='flaskDB'#after creating the database
+app.config['MYSQL_DB']='flaskDB' #after creating the database
 
-mysql=MySQL(app)
+mysql=MySQL(app) #connectivity between flask and mysql
 
-@app.route('/')
-def feedbackform():
-    return render_template('feedback.html')
+@app.route('/') #default page
+def Homepage():
+    return render_template('Home.html') #render_template is used to render from the template folder
 
-@app.route("/feedback", methods=['POST'])
+@app.route('/about')
+def about():
+    return render_template('Aboutus.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route("/contact", methods=['POST','GET'])
 def home():
     if request.method =='POST':
          uname =request.form['name']
@@ -23,9 +32,9 @@ def home():
          ufeedback =request.form['feedback']
          #creating a connetion
          cur=mysql.connection.cursor()
-         cur.execute('''create dtabase flaskDB''')
-        #  cur.execute('''create table feedbackdetailas(name varchar(50),email varchar(50),feedback varchar(1000))''')
-        #  cur.execute('''insert into feedbackdetails(name,email,feedback) values(%s,%s)''',(uname,uemail,ufeedback))
+        #  cur.execute('''create database flaskDB''')
+        #  cur.execute('''create table feedbackdetails(name varchar(50),email varchar(50),feedback varchar(1000))''')
+         cur.execute('''insert into feedbackdetails(name,email,feedback) values(%s,%s,%s)''',(uname,uemail,ufeedback))
          #saving the actions performed
          mysql.connection.commit()
          cur.close()
