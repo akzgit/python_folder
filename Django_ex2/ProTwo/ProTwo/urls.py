@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from AppTwo.views import help
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('apptwo/', include('AppTwo.urls')),
+    path('<str:page>/help/', help, name='help'),
 ]
