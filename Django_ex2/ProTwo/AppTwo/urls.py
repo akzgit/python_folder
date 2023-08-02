@@ -1,7 +1,7 @@
 from django.urls import path
-from . import views
+from AppTwo import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('help/', views.help, name='help'),
+    path('help.html/', views.help, name='help'),
 ]

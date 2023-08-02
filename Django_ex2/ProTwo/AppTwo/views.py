@@ -6,4 +6,4 @@ def index(request):
 
 
 def help(request):
-    return render(request, 'help.html')
+    return render(request,'help.html')

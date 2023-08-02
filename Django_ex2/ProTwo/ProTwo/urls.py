@@ -21,5 +21,5 @@ from AppTwo.views import help
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('apptwo/', include('AppTwo.urls')),
-    path('<str:page>/help/', help, name='help'),
+    path('help.html/', help, name='help'),
 ]
